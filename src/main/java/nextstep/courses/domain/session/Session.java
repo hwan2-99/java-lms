@@ -1,7 +1,8 @@
-package nextstep.courses.domain;
+package nextstep.courses.domain.session;
 
 import java.util.ArrayList;
 import java.util.List;
+import nextstep.courses.domain.PaymentType;
 import nextstep.courses.domain.image.SessionImage;
 import nextstep.payments.domain.Payment;
 import nextstep.users.domain.NsUser;

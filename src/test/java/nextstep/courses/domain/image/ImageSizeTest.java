@@ -1,9 +1,8 @@
-package nextstep.courses.domain;
+package nextstep.courses.domain.image;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import nextstep.courses.domain.image.ImageSize;
 import org.junit.jupiter.api.Test;
 
 class ImageSizeTest {

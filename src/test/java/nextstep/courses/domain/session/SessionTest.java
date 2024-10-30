@@ -1,9 +1,10 @@
-package nextstep.courses.domain;
+package nextstep.courses.domain.session;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.time.LocalDate;
+import nextstep.courses.domain.PaymentType;
 import nextstep.courses.domain.image.SessionImage;
 import nextstep.payments.domain.Payment;
 import nextstep.users.domain.NsUser;
