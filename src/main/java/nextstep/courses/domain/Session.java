@@ -1,6 +1,5 @@
 package nextstep.courses.domain;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import nextstep.courses.domain.image.SessionImage;
@@ -45,16 +44,15 @@ public class Session {
         return new Session(id, sessionDate, sessionImage, PaymentType.PAID, title, subscribeMax, price);
     }
 
-    public void subscribeFreeSession(NsUser user) {
+    public void subscribe(NsUser user) {
         checkRecruiting();
         subscribers.add(new Subscriber(id, user.getId()));
     }
 
     public void subscribePaidSession(NsUser user, Payment payment) {
-        checkRecruiting();
         payment.isSame(price);
         checkMaxSubscriber();
-        subscribers.add(new Subscriber(id, user.getId()));
+        subscribe(user);
     }
 
     private void checkRecruiting() {
@@ -64,7 +62,7 @@ public class Session {
     }
 
     private void checkMaxSubscriber() {
-        if (subscribers.size() > subscribeMax) {
+        if (subscribers.size() >= subscribeMax) {
             throw new IllegalArgumentException("이미 정원이 다 찬 강의입니다.");
         }
     }
@@ -83,5 +81,13 @@ public class Session {
 
     public int getSubscribeCount() {
         return subscribers.size();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public int getPrice() {
+        return price;
     }
 }
