@@ -3,8 +3,8 @@ package nextstep.courses.domain;
 import java.time.LocalDate;
 
 public class SessionDate {
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private final LocalDate startDate;
+    private final LocalDate endDate;
 
     public SessionDate(LocalDate startDate, LocalDate endDate) {
         isFasterStartDate(startDate, endDate);
