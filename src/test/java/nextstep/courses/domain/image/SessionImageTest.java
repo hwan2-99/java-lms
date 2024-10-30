@@ -4,8 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 class SessionImageTest {
     @Test
@@ -14,11 +12,17 @@ class SessionImageTest {
         assertThat(sessionImage).isNotNull();
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {"next.jjpg", "nexxxx"})
-    void 강의_이미지_확장자_검증(String value) {
-        assertThatThrownBy(() -> new SessionImage(value, 300, 200, 1000))
-                .isInstanceOf(IllegalArgumentException.class);
+    @Test
+    void 강의_이미지_확장자_검증() {
+        assertThatThrownBy(() -> new SessionImage("next.jjpg", 300, 200, 1000))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("지원하지 않는 확장자입니다.");
+    }
+    @Test
+    void 강의_이미지_유무_검증() {
+        assertThatThrownBy(() -> new SessionImage("next", 300, 200, 1000))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("확장자가 존재하지 않습니다.");
     }
 
 }
