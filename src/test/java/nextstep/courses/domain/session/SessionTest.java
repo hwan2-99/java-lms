@@ -43,7 +43,15 @@ class SessionTest {
         Session freeSession = Session.createFreeSession(1L, generateSessionDate(), generateSessionImage(), "클린코드");
         NsUser user = NsUserTest.JAVAJIGI;
         assertThatThrownBy(() -> freeSession.subscribe(user))
-                .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 유료_강의_신청_상태_예외처리() {
+        Session paidSession = generatePaidSession();
+        NsUser user = NsUserTest.JAVAJIGI;
+        assertThatThrownBy(() -> paidSession.subscribePaidSession(user, generatePayment(paidSession, user)))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -54,6 +62,17 @@ class SessionTest {
         paidSession.subscribePaidSession(user, generatePayment(paidSession, user));
 
         assertThat(paidSession.getSubscribeCount()).isEqualTo(1);
+    }
+
+    @Test
+    void 유료_강의_금액_예외처리() {
+        Session paidSession = generatePaidSession();
+        NsUser user = NsUserTest.JAVAJIGI;
+        paidSession.changeSessionRecruiting();
+        Payment payment = new Payment("id",paidSession.getId(),user.getId(),10000L);
+
+        assertThatThrownBy(() ->paidSession.subscribePaidSession(user, payment))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

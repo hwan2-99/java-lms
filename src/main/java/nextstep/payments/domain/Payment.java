@@ -27,9 +27,7 @@ public class Payment {
         this.createdAt = LocalDateTime.now();
     }
 
-    public void isSame(int price) {
-        if (amount != price) {
-            throw new IllegalArgumentException("결제금액이 다릅니다.");
-        }
+    public boolean isSame(int price) {
+        return amount == price;
     }
 }

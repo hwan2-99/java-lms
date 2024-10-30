@@ -51,14 +51,14 @@ public class Session {
     }
 
     public void subscribePaidSession(NsUser user, Payment payment) {
-        payment.isSame(price);
+        validatePayment(payment.isSame(price));
         checkMaxSubscriber();
         subscribe(user);
     }
 
     private void checkRecruiting() {
         if (sessionStatus != SessionStatus.RECRUITING) {
-            throw new IllegalStateException("강의는 모집중이 아닙니다.");
+            throw new IllegalArgumentException("강의는 모집중이 아닙니다.");
         }
     }
 
@@ -78,6 +78,12 @@ public class Session {
 
     private void changeSessionStatus(SessionStatus sessionStatus) {
         this.sessionStatus = sessionStatus;
+    }
+
+    private void validatePayment(boolean isSameMoney) {
+        if (!isSameMoney) {
+            throw new IllegalArgumentException("결제금액과 강의 가격이 다릅니다.");
+        }
     }
 
     public int getSubscribeCount() {
