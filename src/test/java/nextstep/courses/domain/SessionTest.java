@@ -3,6 +3,7 @@ package nextstep.courses.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
+import nextstep.courses.domain.image.SessionImage;
 import org.junit.jupiter.api.Test;
 
 class SessionTest {

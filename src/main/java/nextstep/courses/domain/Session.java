@@ -1,6 +1,7 @@
 package nextstep.courses.domain;
 
 import java.time.LocalDate;
+import nextstep.courses.domain.image.SessionImage;
 
 public class Session {
     private final Long id;
