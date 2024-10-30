@@ -11,8 +11,7 @@ import org.junit.jupiter.api.Test;
 class SessionTest {
     @Test
     void 무료_강의_생성() {
-        Session freeSession = Session.createFreeSession(1L, LocalDate.of(2024, 10, 1), LocalDate.of(2024, 10, 31),
-                generateSessionImage(), "클린코드");
+        Session freeSession = Session.createFreeSession(1L, generateSessionDate(), generateSessionImage(), "클린코드");
         assertThat(freeSession)
                 .extracting("title", "paymentType")
                 .containsExactly("클린코드", PaymentType.FREE);
@@ -29,8 +28,7 @@ class SessionTest {
 
     @Test
     void 무료_강의_신청() {
-        Session freeSession = Session.createFreeSession(1L, LocalDate.of(2024, 10, 1), LocalDate.of(2024, 10, 31),
-                generateSessionImage(), "클린코드");
+        Session freeSession = Session.createFreeSession(1L, generateSessionDate(), generateSessionImage(), "클린코드");
         NsUser user = NsUserTest.JAVAJIGI;
         freeSession.changeSessionRecruiting();
         freeSession.subscribeFreeSession(user);
@@ -40,5 +38,9 @@ class SessionTest {
 
     private SessionImage generateSessionImage() {
         return new SessionImage(1L, "next.jpg", 300, 200, 1000);
+    }
+
+    private SessionDate generateSessionDate() {
+        return new SessionDate(LocalDate.of(2024, 10, 1), LocalDate.of(2024, 10, 31));
     }
 }

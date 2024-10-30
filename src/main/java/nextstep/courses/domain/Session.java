@@ -18,20 +18,15 @@ public class Session {
     private SessionStatus sessionStatus;
     private List<Subscriber> subscribers = new ArrayList<>();
 
-    private Session(Long id, LocalDate startDate, LocalDate endDate, SessionImage sessionImage, PaymentType paymentType,
+    private Session(Long id, SessionDate sessionDate, SessionImage sessionImage, PaymentType paymentType,
                     String title) {
-        this.id = id;
-        this.sessionDate = new SessionDate(startDate, endDate);
-        this.sessionImage = sessionImage;
-        this.paymentType = paymentType;
-        this.title = title;
-        this.sessionStatus = SessionStatus.READY;
+        this(id, sessionDate, sessionImage, paymentType, title, Integer.MAX_VALUE, 0);
     }
 
-    private Session(Long id, LocalDate startDate, LocalDate endDate, SessionImage sessionImage, PaymentType paymentType,
+    private Session(Long id, SessionDate sessionDate, SessionImage sessionImage, PaymentType paymentType,
                     String title, int subscribeMax, int price) {
         this.id = id;
-        this.sessionDate = new SessionDate(startDate, endDate);
+        this.sessionDate = sessionDate;
         this.sessionImage = sessionImage;
         this.paymentType = paymentType;
         this.title = title;
@@ -40,9 +35,9 @@ public class Session {
         this.price = price;
     }
 
-    public static Session createFreeSession(Long id, LocalDate startDate, LocalDate endDate, SessionImage sessionImage,
+    public static Session createFreeSession(Long id, SessionDate sessionDate, SessionImage sessionImage,
                                             String title) {
-        return new Session(id, startDate, endDate, sessionImage, PaymentType.FREE, title);
+        return new Session(id, sessionDate, sessionImage, PaymentType.FREE, title);
     }
 
     public static Session createPaidSession(Long id, LocalDate startDate, LocalDate endDate, SessionImage sessionImage,
