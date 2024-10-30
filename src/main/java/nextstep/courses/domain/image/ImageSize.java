@@ -3,7 +3,7 @@ package nextstep.courses.domain.image;
 public class ImageSize {
     private static final int MIN_WIDTH = 300;
     private static final int MIN_HEIGHT = 200;
-    private static final int MAX_VOLUME = 1_048_576;
+    private static final int MAX_VOLUME = 1024 * 1024;
 
     private final int width;
     private final int height;
