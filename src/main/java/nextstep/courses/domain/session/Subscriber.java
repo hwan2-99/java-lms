@@ -12,4 +12,12 @@ public class Subscriber {
         this.userId = userId;
         this.subscriptionDate = LocalDateTime.now();
     }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public Long getSessionId() {
+        return sessionId;
+    }
 }

@@ -47,6 +47,7 @@ public class Session {
 
     public void subscribe(NsUser user) {
         checkRecruiting();
+        checkDuplicateSubscription(user);
         subscribers.add(new Subscriber(id, user.getId()));
     }
 
@@ -83,6 +84,14 @@ public class Session {
     private void validatePayment(boolean isSameMoney) {
         if (!isSameMoney) {
             throw new IllegalArgumentException("결제금액과 강의 가격이 다릅니다.");
+        }
+    }
+
+    private void checkDuplicateSubscription(NsUser user) {
+        for (Subscriber subscriber : subscribers) {
+            if (subscriber.getUserId().equals(user.getId())) {
+                throw new IllegalArgumentException("이미 이 강의에 수강신청한 사용자입니다.");
+            }
         }
     }
 

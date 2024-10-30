@@ -45,6 +45,15 @@ class SessionTest {
         assertThatThrownBy(() -> freeSession.subscribe(user))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+    @Test
+    void 무료_강의_중복신청_예외처리() {
+        Session freeSession = Session.createFreeSession(1L, generateSessionDate(), generateSessionImage(), "클린코드");
+        NsUser user = NsUserTest.JAVAJIGI;
+        freeSession.changeSessionRecruiting();
+        freeSession.subscribe(user);
+        assertThatThrownBy(() -> freeSession.subscribe(user))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 
     @Test
     void 유료_강의_신청_상태_예외처리() {
@@ -84,6 +93,16 @@ class SessionTest {
         paidSession.subscribe(user1);
 
         assertThatThrownBy(() -> paidSession.subscribePaidSession(user2, generatePayment(paidSession, user2)))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+    @Test
+    void 유료_강의_중복신청_예외처리() {
+        Session paidSession = generatePaidSession();
+        NsUser user1 = NsUserTest.JAVAJIGI;
+        paidSession.changeSessionRecruiting();
+        paidSession.subscribe(user1);
+
+        assertThatThrownBy(() -> paidSession.subscribePaidSession(user1, generatePayment(paidSession, user1)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
