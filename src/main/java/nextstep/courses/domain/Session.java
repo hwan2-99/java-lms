@@ -40,9 +40,9 @@ public class Session {
         return new Session(id, sessionDate, sessionImage, PaymentType.FREE, title);
     }
 
-    public static Session createPaidSession(Long id, LocalDate startDate, LocalDate endDate, SessionImage sessionImage,
+    public static Session createPaidSession(Long id, SessionDate sessionDate, SessionImage sessionImage,
                                             String title, int subscribeMax, int price) {
-        return new Session(id, startDate, endDate, sessionImage, PaymentType.PAID, title, subscribeMax, price);
+        return new Session(id, sessionDate, sessionImage, PaymentType.PAID, title, subscribeMax, price);
     }
 
     public void subscribeFreeSession(NsUser user) {
