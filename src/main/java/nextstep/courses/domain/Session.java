@@ -1,7 +1,11 @@
 package nextstep.courses.domain;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import nextstep.courses.domain.image.SessionImage;
+import nextstep.payments.domain.Payment;
+import nextstep.users.domain.NsUser;
 
 public class Session {
     private final Long id;
@@ -12,6 +16,7 @@ public class Session {
     private int subscribeMax;
     private int price;
     private SessionStatus sessionStatus;
+    private List<Subscriber> subscribers = new ArrayList<>();
 
     private Session(Long id, LocalDate startDate, LocalDate endDate, SessionImage sessionImage, PaymentType paymentType,
                     String title) {
@@ -43,5 +48,45 @@ public class Session {
     public static Session createPaidSession(Long id, LocalDate startDate, LocalDate endDate, SessionImage sessionImage,
                                             String title, int subscribeMax, int price) {
         return new Session(id, startDate, endDate, sessionImage, PaymentType.PAID, title, subscribeMax, price);
+    }
+
+    public void subscribeFreeSession(NsUser user) {
+        checkRecruiting();
+        subscribers.add(new Subscriber(id, user.getId()));
+    }
+
+    public void subscribePaidSession(NsUser user, Payment payment) {
+        checkRecruiting();
+        payment.isSame(price);
+        checkMaxSubscriber();
+        subscribers.add(new Subscriber(id, user.getId()));
+    }
+
+    private void checkRecruiting() {
+        if (sessionStatus != SessionStatus.RECRUITING) {
+            throw new IllegalStateException("강의는 모집중이 아닙니다.");
+        }
+    }
+
+    private void checkMaxSubscriber() {
+        if (subscribers.size() > subscribeMax) {
+            throw new IllegalArgumentException("이미 정원이 다 찬 강의입니다.");
+        }
+    }
+
+    public void changeSessionRecruiting() {
+        changeSessionStatus(SessionStatus.RECRUITING);
+    }
+
+    public void changeSessionClosed() {
+        changeSessionStatus(SessionStatus.CLOSED);
+    }
+
+    private void changeSessionStatus(SessionStatus sessionStatus) {
+        this.sessionStatus = sessionStatus;
+    }
+
+    public int getSubscribeCount() {
+        return subscribers.size();
     }
 }
