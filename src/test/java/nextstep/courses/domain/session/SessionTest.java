@@ -39,6 +39,14 @@ class SessionTest {
     }
 
     @Test
+    void 무료_강의_신청_상태_예외처리() {
+        Session freeSession = Session.createFreeSession(1L, generateSessionDate(), generateSessionImage(), "클린코드");
+        NsUser user = NsUserTest.JAVAJIGI;
+        assertThatThrownBy(() -> freeSession.subscribe(user))
+                .isInstanceOf(IllegalStateException.class);
+    }
+
+    @Test
     void 유료_강의_신청() {
         Session paidSession = generatePaidSession();
         NsUser user = NsUserTest.JAVAJIGI;
@@ -49,7 +57,7 @@ class SessionTest {
     }
 
     @Test
-    void 유료_강의_신청_예외처리() {
+    void 유료_강의_신청_정원_예외처리() {
         Session paidSession = generatePaidSession();
         NsUser user1 = NsUserTest.JAVAJIGI;
         NsUser user2 = NsUserTest.SANJIGI;
