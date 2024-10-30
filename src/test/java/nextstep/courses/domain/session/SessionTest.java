@@ -66,7 +66,7 @@ class SessionTest {
     }
 
     private SessionImage generateSessionImage() {
-        return new SessionImage(1L, "next.jpg", 300, 200, 1000);
+        return new SessionImage("next.jpg", 300, 200, 1000);
     }
 
     private SessionDate generateSessionDate() {
