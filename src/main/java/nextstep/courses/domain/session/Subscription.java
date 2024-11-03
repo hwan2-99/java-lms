@@ -27,20 +27,20 @@ public class Subscription {
         }
     }
 
-    public void subscribe(NsUser user) {
+    public void subscribe(NsUser user) throws SessionException{
         if (!sessionStatus.isRecruiting()) {
-            throw new IllegalArgumentException("강의는 모집중이 아닙니다.");
+            throw new SessionException("강의는 모집중이 아닙니다.");
         }
         if (subscribers.contains(user)) {
-            throw new IllegalArgumentException("이미 이 강의에 수강신청한 사용자입니다.");
+            throw new SessionException("이미 이 강의에 수강신청한 사용자입니다.");
         }
         subscribers.add(user);
     }
 
-    public void subscribe(NsUser user, boolean isSameMoney) {
+    public void subscribe(NsUser user, boolean isSameMoney) throws SessionException{
         validateMaxSubscriber(subscribeMax, subscribers);
         if (!isSameMoney) {
-            throw new IllegalArgumentException("결제금액과 강의 가격이 다릅니다.");
+            throw new SessionException("결제금액과 강의 가격이 다릅니다.");
         }
         subscribe(user);
     }

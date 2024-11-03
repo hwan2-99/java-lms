@@ -30,7 +30,7 @@ public class Session {
         this.price = price;
     }
 
-    public void subscribe(NsUser user, Payment payment) {
+    public void subscribe (NsUser user, Payment payment) throws SessionException {
         if (isFree()) {
             subscription.subscribe(user);
             return;
