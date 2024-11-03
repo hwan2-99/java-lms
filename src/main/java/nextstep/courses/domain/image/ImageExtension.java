@@ -16,14 +16,12 @@ public enum ImageExtension {
         this.extension = extension;
     }
 
-    public static void confirmImageExtension(String fileName) {
+    public static ImageExtension from(String fileName) {
         String fileExtension = getFileExtension(fileName);
-        boolean isValid = Arrays.stream(values())
-                .anyMatch(imageExtension -> imageExtension.extension.equalsIgnoreCase(fileExtension));
-
-        if (!isValid) {
-            throw new IllegalArgumentException("지원하지 않는 확장자입니다.");
-        }
+        return Arrays.stream(values())
+                .filter(imageExtension -> imageExtension.extension.equalsIgnoreCase(fileExtension))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("지원하지 않는 확장자입니다."));
     }
 
     private static String getFileExtension(String fileName) {
